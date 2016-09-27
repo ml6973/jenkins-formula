@@ -23,16 +23,16 @@ Create /srv/salt/top.sls
 .. code-block:: yaml
 
     base:
-      '\*jenkins*':
-      \- jenkins-formula.jenkins
+      '*jenkins*':
+       - jenkins-formula.jenkins
 
 Create /srv/pillar/top.sls
 
 .. code-block:: yaml
 
     base:
-      '\*jenkins*':
-        \- jenkins
+      '*jenkins*':
+       - jenkins
     
 put jenkins pillars into /srv/pillar/jenkins.sls
     
