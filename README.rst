@@ -1,6 +1,15 @@
 jenkins
 =======
 
+Install/Setup SaltStack
+.. codeblock:: yaml
+    $ sudo add-apt-repository ppa:saltstack/salt
+    $ sudo apt-get update
+    $ apt-get install salt-api salt-cloud salt-master salt-minion salt-ssh salt-syndic
+    $ mkdir /srv/salt
+    $ mkdir /srv/pillar
+
+
 Available states
 ================
 
