@@ -5,7 +5,8 @@ Install/Setup SaltStack
 =======================
 
 Run saltstack installation
-.. codeblock::
+
+.. code-block::
 
     $ sudo add-apt-repository ppa:saltstack/salt
     
@@ -16,16 +17,19 @@ Run saltstack installation
     $ mkdir /srv/salt
     
     $ mkdir /srv/pillar
-    
-    
+
 Create /srv/salt/top.sls
+
 .. code-block:: yaml
+
     base:
       '\*jenkins*':
-        \- jenkins-formula.jenkins
+      \- jenkins-formula.jenkins
 
 Create /srv/pillar/top.sls
+
 .. code-block:: yaml
+
     base:
       '\*jenkins*':
         \- jenkins
