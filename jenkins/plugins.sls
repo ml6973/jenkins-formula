@@ -2,7 +2,7 @@ include:
   - jenkins
   - jenkins.cli
 
-{% from "jenkins/map.jinja" import jenkins with context %}
+{% from "jenkins-formula/jenkins/map.jinja" import jenkins with context %}
 
 {%- macro fmtarg(prefix, value)-%}
 {{ (prefix + ' ' + value) if value else '' }}

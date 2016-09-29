@@ -1,4 +1,4 @@
-{% from "jenkins/map.jinja" import jenkins with context %}
+{% from "jenkins-formula/jenkins/map.jinja" import jenkins with context %}
 
 /etc/nginx/sites-available/jenkins.conf:
   file.managed:
