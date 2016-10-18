@@ -49,3 +49,13 @@ jenkins:
     - enable: True
     - watch:
       - pkg: jenkins
+
+
+extra_packages:
+  pkg:
+    - installed
+    - pkgs:
+      - python-pip
+
+
+#Install firefox from https://ftp.mozilla.org/pub/firefox/releases/45.0/linux-x86_64/en-US/firefox-45.0.tar.bz2

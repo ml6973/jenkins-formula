@@ -1,0 +1,80 @@
+{% from "jenkins-formula/jenkins/map.jinja" import jenkins with context %}
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          hudsonvmfarm
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Should-Start:      $named
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: hudsonswarm build slave
+# Description:       hudsonswarm build slave assigned to a Hudson master
+### END INIT INFO
+set -e
+
+. /lib/lsb/init-functions
+
+USER={{ jenkins.user }}
+USER_HOME="{{ jenkins.home }}"
+JAR="/opt/swarm-client.jar"
+LOG="/opt/swarm.log"
+MASTER="{{ jenkins.master_url }}"
+USERNAME="{{ jenkins.slave.user }}"
+PASSWORD="{{ jenkins.slave.password }}"
+NAME="{{ slave_name }}"
+# Swarm client option
+DESCRIPTION="systools-01.pelco.org"
+EXECUTORS=1
+FSROOT="${USER_HOME}/fsroot"
+LABELS="Swarm"
+
+OPTS="-description \"${DESCRIPTION}\" \
+      -executors ${EXECUTORS} \
+      -fsroot ${FSROOT} \
+      -labels \"${LABELS}\" \
+      -master \"${MASTER}\" \
+      -name \"${NAME}\" \
+      -username ${USERNAME} \
+      -password ${PASSWORD} \
+      -disableClientsUniqueId"
+
+PIDFILE="${USER_HOME}/hudsonswarm.pid"
+ARGS="-server -Djava.awt.headless=true -jar $JAR $OPTS"
+JAVA_HOME="/etc/alternatives/java"
+DAEMON="/usr/bin/java"
+
+test -x $DAEMON || exit 1
+
+case $1 in
+   start)
+       log_daemon_msg "Starting hudsonswarm"
+       EXECUTE="start-stop-daemon --start --quiet --chuid $USER --background --make-pidfile --pidfile $PIDFILE --startas $DAEMON -- $ARGS"
+       eval $EXECUTE
+       log_end_msg $?
+       ;;
+   stop)
+       if [ -e $PIDFILE ]; then
+          log_daemon_msg "Stopping hudsonswarm"
+          start-stop-daemon --stop --quiet --pidfile $PIDFILE
+          log_end_msg $?
+          rm -f $PIDFILE
+       fi
+       ;;
+   restart)
+        $0 stop
+        sleep 2
+        $0 start
+        ;;
+   status)
+        status_of_proc -p $PIDFILE "$DAEMON" hudsonswarm
+  RETVAL=$?
+	;;
+
+   *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
+
+esac
+
+exit 0
