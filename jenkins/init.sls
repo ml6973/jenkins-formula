@@ -24,6 +24,17 @@ jenkins_user:
     - require:
       - group: jenkins_group
 
+jenkins_workflowparameters_dir:
+  file.directory:
+    - name: "{{ jenkins.home }}/WorkFlowParameters/"
+    - user: {{ jenkins.user }}
+    - group: {{ jenkins.group }}
+    - mode: 0755
+    - require:
+      - user: jenkins_user
+      - group: jenkins_group
+
+
 jenkins:
   {% if grains['os_family'] in ['RedHat', 'Debian'] %}
     {% set repo_suffix = '' %}
@@ -56,6 +67,10 @@ extra_packages:
     - installed
     - pkgs:
       - python-pip
+      - jq
+      - vnc4server
 
+selenium:
+  pip.installed:
 
 #Install firefox from https://ftp.mozilla.org/pub/firefox/releases/45.0/linux-x86_64/en-US/firefox-45.0.tar.bz2
