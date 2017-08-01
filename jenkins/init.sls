@@ -71,6 +71,6 @@ extra_packages:
       - vnc4server
 
 selenium:
-  pip.installed:
+  pip.installed
 
 #Install firefox from https://ftp.mozilla.org/pub/firefox/releases/45.0/linux-x86_64/en-US/firefox-45.0.tar.bz2
