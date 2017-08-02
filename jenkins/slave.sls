@@ -25,11 +25,19 @@ jenkins_user:
     - require:
       - group: jenkins_group
 
-default-jre:
-  pkg.installed
 
-default-jdk:
-  pkg.installed
+java_pkg:
+  pkgrepo.managed:
+    - humanname: OpenJDK package repository
+    - file: /etc/apt/sources.list.d/openjdk-r-ppa-trusty.list
+    - name: deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu trusty main
+    - keyid: 86F44E2A
+    - keyserver: keyserver.ubuntu.com
+    - require_in:
+      - pkg: java_pkg
+  pkg.installed:
+    - pkgs:
+      - openjdk-8-jdk
 
 /opt/swarm-client.jar:
   file.managed:
