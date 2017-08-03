@@ -69,8 +69,12 @@ extra_packages:
       - python-pip
       - jq
       - vnc4server
+      - firefox
+      - imagemagick
 
 selenium:
   pip.installed
 
 #Install firefox from https://ftp.mozilla.org/pub/firefox/releases/45.0/linux-x86_64/en-US/firefox-45.0.tar.bz2
+#wget https://github.com/mozilla/geckodriver/releases/download/v0.18.0/geckodriver-v0.18.0-linux64.tar.gz
+
